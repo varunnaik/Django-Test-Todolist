@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Add todo item</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_due").datepicker({dateFormat: 'yy-mm-dd'});
+    });
+    </script>
+{% endblock %}
+
+{% block body %}
+    {% if form.non_field_errors %}
+      <p class="error">{{ form.non_field_errors }}</p>      
+    {% endif %}
+    <h1>Add a task</h1>
+    <form action="." method="post">
+    {% csrf_token %}
+        <div class="fieldWrapper">
+            {% if form.name.errors %}
+                <p class="error">Task Name:{{ form.name.errors }}</p>
+            {% endif %}            
+            <label for="id_subject">Task name:</label>
+            {{ form.name }}
+        </div>
+        <div class="fieldWrapper">
+              {% if form.priority.errors %}
+                <p class="error">Priority:{{ form.priority.errors }}</p>
+              {% endif %}  
+            <label for="id_message">Priority:</label>
+            {{ form.priority }}
+        </div>
+        <div class="fieldWrapper">
+            {% if form.due.errors %}
+                <p class="error">Due on:{{ form.due.errors }}</p>
+            {% endif %}      
+            <label for="id_sender">Due on (optional):</label>
+            {{ form.due }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.notes.errors }}
+            <label for="id_cc_myself">Notes (optional):</label>
+            {{ form.notes }}
+        </div>
+        <div style="clear: both"><br /><br /><br /><br /><br /><br /></div>
+    <input type="submit" value="Save" /> or <a href="/todo/">Cancel and return to the todo list</a>
+    </form>
+{% endblock %}

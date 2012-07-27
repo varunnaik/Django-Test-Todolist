@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block head %}
+<title>Login to your account</title>
+<style>
+input[type=text], input[type=password] {
+    left: 100px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+
+<h1>Login to your account</h1>
+
+{% if form.errors %}
+<p><span class="error">Your username or password were incorrect. Please try again.</span></p>
+{% endif %}
+
+<form method="post" action="{% url todo_login %}">
+{% csrf_token %}
+
+<label for="{{ form.username.id }}">{{ form.username.label_tag }}:</label> {{ form.username }}<br />
+<label for="{{ form.password.id }}">{{ form.password.label_tag }}: {{ form.password }}<br />
+
+<input type="submit" value="Login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+<p><a href="/register/">Sign up for an account</a>&nbsp;&nbsp;or&nbsp;&nbsp; 
+<a href="/">Go back to the homepage</a></p>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>ToDo List</title>
+{% endblock %}
+
+{% block body %}
+    <div id="content">
+    <h1 style="margin-top: 0">Todo list: {{ user.username }}</h1>
+    <div style="position: absolute; top: 0; right: 0;margin: 0;"><a href="/settings/api/">API</a> | <a href="/settings/">My Settings</a> | <a href="/logout/">Logout</a></div>
+    <dl id="todo_items">
+    <dt>&nbsp;</dt><dd><a href="/todo/add/" style="font-size: 140%;">Add new item</a></dd>
+    {% if todo_items %}
+            <p>Order by: <a href="/todo/?order=created" {% if order = 'created' %} class="active" {% endif %}>Most recently created first</a> | <a href="/todo/?order=due" {% if order = 'due' %} class="active" {% endif %}>Earliest due date first</a> | <a href="/todo/?order=priority" {% if order = 'priority' %} class="active" {% endif %}>Highest priority first</a></p>
+        {% for item in todo_items %}
+            <dt>{{ forloop.counter }}.</dt><dd><h2>{{ item.name}}</h2>
+            {% if item.due != none %}
+                <em>Due on <strong>{{ item.due }}</strong></em> | 
+            {% endif %}
+            <em>Created on {{ item.created }}</em><br />
+            Priority: <strong> {{ item.get_priority_display }}</strong><br />
+            {% if item.notes %}
+                <p>{{ item.notes }}</p>
+            {% endif %}
+            <a href="/todo/{{ item.pk }}/edit/">Edit</a> | <a href="/todo/{{ item.pk }}/delete/">Delete</a></dd>
+        {% endfor %}
+    {% else %}
+        <h2>No items in your todo list</h2>
+    {% endif %}
+    </dl>
+    </div>
+{% endblock %}

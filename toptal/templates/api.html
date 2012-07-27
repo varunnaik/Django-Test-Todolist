@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>ToDo List: API Reference</title>
+    <style type="text/css">
+    dt {
+        text-decoration: underline;
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>API Reference</h1>
+    <strong>All API calls use HTTP Basic Authentication.</strong>
+    <dl>
+        <dt>List all todo items</dt>
+        <dd>GET http://localhost:8000/api/v1/todo/</dd>
+        <dt>Create a new todo item</dt>
+        <dd>POST http://localhost:8000/api/v1/todo/<br />
+        with a new item as JSON. eg. {'name': 'My task', 'user': 'http://localhost:8000/todo/api/user/1', 'due': '2012-12-20'}<br />
+        The 'name' and 'user' fields are mandatory, everything else is optional.</dd>
+        <dt>Modify a todo item</dt>
+        <dd>PUT http://localhost:8000/api/v1/todo/{your_item_id}<br />
+        with a JSON object containing new values for the item. Fields not specified will retain their original values</dd>
+        <dt>Delete a todo item</dt>
+        <dd>DELETE http://localhost:8000/api/v1/todo/{your_item_id}<br />
+        to delete the item specified by {your_item_id}</dd>
+    </dl>
+    <p><a href="/todo/">Return to your todo list</a></p>
+{% endblock %}
